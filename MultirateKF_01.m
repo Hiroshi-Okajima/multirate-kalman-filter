@@ -209,13 +209,13 @@ lmiterm([-1, 2, 1, Y_var], Bd, 1);      % C_cyc'*Y
 lmiterm([-1, 2, 2, X_var], 1, 1);
 
 % (3,1): Q^{1/2}*X
-lmiterm([-1, 3, 1, X_var], Q_cyc_sqrt, 1);
+lmiterm([-1, 3, 1, X_var], Q_cyc_sqrt', 1);
 
 % (3,3): I_n_cyc
 lmiterm([-1, 3, 3, 0], eye(n_cyc));
 
 % (4,1): R^{1/2}*Y (using regularized version)
-lmiterm([-1, 4, 1, Y_var], R_cyc_sqrt, 1);
+lmiterm([-1, 4, 1, Y_var], R_cyc_sqrt', 1);
 
 % (4,4): I_m_cyc
 lmiterm([-1, 4, 4, 0], eye(m_cyc));

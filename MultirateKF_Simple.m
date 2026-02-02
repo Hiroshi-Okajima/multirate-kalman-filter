@@ -214,7 +214,7 @@ W_var = lmivar(1, [n_cyc, 1]);      % W >= X^{-1} (for trace minimization)
 %% LMI #1: Stability and Performance (DARE-based LMI)
 % [X,            (Ad*X+Bd*Y)',  X*Q_sqrt,    Y'*R_sqrt]
 % [Ad*X+Bd*Y,    X,             0,           0        ]
-% [Q_sqrt*X,     0,             I,           0        ]
+% [Q_sqrt'*X,     0,             I,           0        ]
 % [R_sqrt*Y,     0,             0,           I        ] >= 0
 
 % Block (1,1): X
@@ -228,13 +228,13 @@ lmiterm([-1, 2, 1, Y_var], Bd, 1);
 lmiterm([-1, 2, 2, X_var], 1, 1);
 
 % Block (3,1): Q_sqrt*X
-lmiterm([-1, 3, 1, X_var], Q_cyc_sqrt, 1);
+lmiterm([-1, 3, 1, X_var], Q_cyc_sqrt', 1);
 
 % Block (3,3): I
 lmiterm([-1, 3, 3, 0], eye(n_cyc));
 
 % Block (4,1): R_sqrt*Y
-lmiterm([-1, 4, 1, Y_var], R_cyc_sqrt, 1);
+lmiterm([-1, 4, 1, Y_var], R_cyc_sqrt', 1);
 
 % Block (4,4): I
 lmiterm([-1, 4, 4, 0], eye(m_cyc));
