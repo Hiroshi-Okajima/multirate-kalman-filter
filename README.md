@@ -15,6 +15,8 @@ MATLAB implementation of LMI-based multirate Kalman filter design using cyclic r
 | `MultirateKF_01.m` | Basic optimal Kalman filter design | Minimize trace(P_e) |
 | `MultirateKF_02_eig.m` | Multi-objective design with eigenvalue placement | Minimize trace(P_e) subject to \|λ\| < r̄ |
 | `MultirateKF_03_l2.m` | Multi-objective design with l2-induced norm | Minimize trace(P_e) subject to \|\|G\|\|_{l2} < γ̄ |
+| `MultirateKF_Simple.m` | Basic optimal Kalman filter design for 1st order system| Minimize trace(P_e) |
+
 
 #### Required 
 Control System Toolbox
