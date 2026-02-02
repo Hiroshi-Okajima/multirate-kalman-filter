@@ -231,16 +231,22 @@ def solve_lmi_kalman_filter(A_cyc: np.ndarray, C_cyc: np.ndarray,
     
     constraints = []
     
-    # LMI #1: Stability and Performance (matching MATLAB structure)
-    # [X,              (Ad*X + Bd*Y)',   X*Q^{1/2},   Y'*R^{1/2}]
-    # [Ad*X + Bd*Y,    X,                0,           0         ]
-    # [Q^{1/2}*X,      0,                I,           0         ]
-    # [R^{1/2}*Y,      0,                0,           I         ]
+    # LMI #1: Stability and Performance (Equation 39 in paper)
+    # Paper defines Y ∈ R^{Nn×Nq}, but MATLAB/Python uses Y ∈ R^{Nq×Nn} (transposed)
+    # 
+    # Paper equation (39):
+    # [X,                (XA + YC)^T,      X*Q^{1/2},         Y*R^{1/2}       ]
+    # [XA + YC,          X,                0,                 0               ]
+    # [(Q^{1/2})^T*X,    0,                I,                 0               ]
+    # [(R^{1/2})^T*Y^T,  0,                0,                 I               ]
+    #
+    # With Y_matlab = Y_paper^T:
+    # (R^{1/2})^T * Y_paper^T = (R^{1/2})^T * Y_matlab
     
     block_11 = X
     block_21 = Ad @ X + Bd @ Y           # A_cyc' * X + C_cyc' * Y
-    block_31 = Q_cyc_sqrt @ X
-    block_41 = R_cyc_sqrt @ Y            # R^{1/2} * Y (m_cyc × n_cyc)
+    block_31 = Q_cyc_sqrt.T @ X          # (Q^{1/2})^T * X  (paper eq.39)
+    block_41 = R_cyc_sqrt.T @ Y          # (R^{1/2})^T * Y_matlab = (R^{1/2})^T * Y_paper^T
     
     block_22 = X
     block_33 = np.eye(n_cyc)
