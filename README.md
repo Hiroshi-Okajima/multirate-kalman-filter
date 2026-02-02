@@ -23,3 +23,23 @@ Automotive navigation with GPS (1 Hz) and wheel speed sensor (10 Hz):
 - **Measurements**: 
   - k mod 10 = 0: GPS + wheel speed
   - k mod 10 ≠ 0: wheel speed only
+
+## Quick Start
+```bash
+git clone https://github.com/Hiroshi-Okajima/multirate-kalman-filter.git
+cd multirate-kalman-filter
+```
+
+Open MATLAB and run:
+```matlab
+MultirateKF_LMI_Rcyc_success_02  % Basic optimal design
+MultirateKF_02_eig              % With eigenvalue constraints
+MultirateKF_03_l2               % With l2-induced norm constraints
+```
+
+## Example Results
+
+Automotive navigation (GPS 1Hz + Wheel speed 10Hz):
+- Position RMSE: **0.600 m**
+- Velocity RMSE: **0.268 m/s**
+- Stable: max|λ| = **0.967**
