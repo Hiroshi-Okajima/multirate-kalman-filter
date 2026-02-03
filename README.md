@@ -66,5 +66,5 @@ Automotive navigation (GPS 1Hz + Wheel speed 10Hz):
 - Position RMSE: **0.600 m**
 - Velocity RMSE: **0.268 m/s**
 - Stable: max|λ| = **0.967**
+![Simulation Results](https://github.com/Hiroshi-Okajima/multirate-kalman-filter/blob/main/fig.jpg)
 
-![Simulation Results](https://github.com/username/repo/raw/main/images/MATLAB_file_exchange.jpg)
