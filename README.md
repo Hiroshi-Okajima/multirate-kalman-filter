@@ -3,7 +3,7 @@
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2020b+-blue.svg)](https://www.mathworks.com/products/matlab.html)
 [![Python](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org/)
 
-MATLAB/Python implementation of LMI-based multirate Kalman filter design using cyclic reformulation. This repository contains the code accompanying the paper:
+MATLAB/Python implementation of LMI-based multirate steady-state Kalman filter design using cyclic reformulation. This repository contains the code accompanying the paper:
 
 > H. Okajima, "LMI Optimization Based Multirate Steady-State Kalman Filter Design,"
 > [ArXiV](https://arxiv.org/abs/2602.01537), Submitted to IEEE Access
