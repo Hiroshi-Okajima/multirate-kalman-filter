@@ -67,4 +67,4 @@ Automotive navigation (GPS 1Hz + Wheel speed 10Hz):
 - Velocity RMSE: **0.268 m/s**
 - Stable: max|λ| = **0.967**
 
-- 
+![Simulation Results](https://github.com/username/repo/raw/main/images/MATLAB_file_exchange.jpg)
