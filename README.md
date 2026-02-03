@@ -18,6 +18,8 @@ MATLAB/Python implementation of LMI-based multirate Kalman filter design using c
 | `MultirateKF_Simple.m` | Basic optimal Kalman filter design for 1st order system| Minimize trace(P_e) |
 | `MultirateKF_Simple.ipynb` | Basic optimal Kalman filter design for 1st order system (Python)| Minimize trace(P_e) |
 | `MultirateKF_Simple.py` | Basic optimal Kalman filter design for 1st order system (Python)| Minimize trace(P_e) |
+| `MultirateKF_01.ipynb` | Basic optimal Kalman filter design (Python) | Minimize trace(P_e) |
+| `MultirateKF_01.py` | Basic optimal Kalman filter design (Python) | Minimize trace(P_e) |
 
 #### Required 
 **MATLAB:**
@@ -45,15 +47,17 @@ cd multirate-kalman-filter
 
 **MATLAB:**
 ```matlab
-MultirateKF_LMI_Rcyc_success_02  % Basic optimal design
+MultirateKF_01                  % Basic optimal design
 MultirateKF_02_eig              % With eigenvalue constraints
 MultirateKF_03_l2               % With l2-induced norm constraints
+MultirateKF_Simple              % Basic optimal Kalman filter design for 1st order system
 ```
 
 **Python:**
 ```bash
 pip install numpy scipy matplotlib cvxpy
 python MultirateKF_Simple.py
+python MultirateKF_01.py
 ```
 
 ## Example Results
