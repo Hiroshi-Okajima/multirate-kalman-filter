@@ -335,20 +335,19 @@ fprintf('  Total time: %.1f seconds\n', T*dt);
 fprintf('  Total distance traveled: %.1f m\n', x_true(1,end));
 fprintf('  Maximum velocity: %.1f m/s (%.1f km/h)\n', max(x_true(2,:)), max(x_true(2,:))*3.6);
 
-%% 7. Multirate Kalman Filter (LMI version)
+%% 7. Multirate Kalman Filter (LMI version) - Predictor Form
+% Paper equation (13):
+%   x_hat(k+1) = A*x_hat(k) + B*u(k) + L_k*(y(k) - S_k*C*x_hat(k))
+% where x_hat(k) denotes x_hat(k|k-1) (one-step-ahead predictor).
 x_hat = zeros(n, T);
 x_hat(:,1) = x_true(:,1);
 
 for k = 1:T-1
-    % Prediction
-    x_pred = A*x_hat(:,k) + B*u(k);
-    z_pred = C*x_pred;
+    % Predictor form: use y(k) and x_hat(k), not y(k+1) and x_pred
+    idx = mod(k-1, N) + 1;  % L_{(k-1) mod N}: gain for time k-1 (0-indexed)
+    innovation = z_obs(:,k) - C*x_hat(:,k);  % y(k) - C*x_hat(k)
     
-    % Update (periodic time-varying gain)
-    idx = mod(k, N) + 1;
-    innovation = z_obs(:,k+1) - z_pred;
-    
-    x_hat(:,k+1) = x_pred + L{idx}*innovation;
+    x_hat(:,k+1) = A*x_hat(:,k) + B*u(k) + L{idx}*innovation;
 end
 
 fprintf('\nKalman filter completed\n');

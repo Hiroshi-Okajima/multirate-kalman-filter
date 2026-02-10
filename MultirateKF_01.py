@@ -375,20 +375,17 @@ def simulate_multirate_kalman_filter(A: np.ndarray, B: np.ndarray, C: np.ndarray
         v = R_sqrt @ np.random.randn(m)
         z_obs[:, k] = C @ x_true[:, k] + v
     
-    # Kalman filter estimation
+    # Kalman filter estimation (Predictor form)
+    # Paper eq.(13): x_hat(k+1) = A*x_hat(k) + B*u(k) + L_k*(y(k) - S_k*C*x_hat(k))
     x_hat = np.zeros((n, T))
     x_hat[:, 0] = x_true[:, 0]  # Perfect initial condition
     
     for k in range(T - 1):
-        # Prediction
-        x_pred = A @ x_hat[:, k] + B.flatten() * u[k]
-        z_pred = C @ x_pred
-        
-        # Update with periodic gain
+        # Predictor form: use y(k) and x_hat(k)
         idx = k % N
-        innovation = z_obs[:, k+1] - z_pred
+        innovation = z_obs[:, k] - C @ x_hat[:, k]  # y(k) - C*x_hat(k)
         
-        x_hat[:, k+1] = x_pred + L[idx] @ innovation
+        x_hat[:, k+1] = A @ x_hat[:, k] + B.flatten() * u[k] + L[idx] @ innovation
     
     return x_true, x_hat, z_obs, u
 

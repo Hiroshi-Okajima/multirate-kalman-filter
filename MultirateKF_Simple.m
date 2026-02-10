@@ -351,27 +351,18 @@ for k = 1:T
     y_obs(k) = C * x_true(k) + v;
 end
 
-% Kalman filter estimation
+% Kalman filter estimation (Predictor form)
+% Paper equation (13): x_hat(k+1) = A*x_hat(k) + B*u(k) + L_k*(y(k) - S_k*C*x_hat(k))
 x_hat = zeros(1, T);
 x_hat(1) = x_true(1);  % Perfect initial condition
 
 for k = 1:T-1
-    % Prediction
-    x_pred = A * x_hat(k) + B * u(k);
-    y_pred = C * x_pred;
-    
-    % Update with periodic gain
-    idx = mod(k-1, N) + 1;  % k=1 corresponds to S{1}
+    % Predictor form: use y(k) and x_hat(k), not y(k+1) and x_pred
+    idx = mod(k-1, N) + 1;  % L_{(k-1) mod N}: gain for time k-1 (0-indexed)
     S_k = S{idx};
     
-    if S_k == 1
-        % Measurement available
-        innovation = y_obs(k+1) - y_pred;
-        x_hat(k+1) = x_pred + L{idx} * innovation;
-    else
-        % No measurement
-        x_hat(k+1) = x_pred;
-    end
+    innovation = y_obs(k) - C * x_hat(k);  % y(k) - C*x_hat(k)
+    x_hat(k+1) = A * x_hat(k) + B * u(k) + L{idx} * S_k * innovation;
 end
 
 % Performance metrics
@@ -457,14 +448,13 @@ fprintf('Standard Kalman filter (all S_k = 1):\n');
 fprintf('  Steady-state gain: K = %.6f\n', K_std);
 fprintf('  Steady-state covariance: P = %.6f\n\n', P_std);
 
-% Simulation with standard KF
+% Simulation with standard KF (Predictor form)
+% x_hat(k+1) = A*x_hat(k) + B*u(k) + K_std*(y(k) - C*x_hat(k))
 x_hat_std = zeros(1, T);
 x_hat_std(1) = x_true(1);
 for k = 1:T-1
-    x_pred = A * x_hat_std(k) + B * u(k);
-    y_pred = C * x_pred;
-    innovation = y_obs(k+1) - y_pred;
-    x_hat_std(k+1) = x_pred + K_std * innovation;
+    innovation = y_obs(k) - C * x_hat_std(k);  % y(k) - C*x_hat(k)
+    x_hat_std(k+1) = A * x_hat_std(k) + B * u(k) + K_std * innovation;
 end
 
 error_std = x_true - x_hat_std;
