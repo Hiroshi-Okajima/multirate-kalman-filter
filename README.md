@@ -7,7 +7,8 @@ MATLAB/Python implementation of LMI-based multirate steady-state Kalman filter d
 
 > [H. Okajima, "LMI Optimization Based Multirate Steady-State Kalman Filter Design," IEEE Access
 (2026) ](https://ieeexplore.ieee.org/document/11460152)
-> [ArXiV](https://arxiv.org/abs/2602.01537)
+> 
+> [ArXiV ver.](https://arxiv.org/abs/2602.01537)
 ### Main Scripts
 
 | File | Description | Design Objective |
